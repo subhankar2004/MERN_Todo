@@ -1,18 +1,55 @@
 // ✅ _login.scss
 @use "features" as *;
 
-.login > section {
-  @include container(900px, unset, 2rem);
-  min-height: 80%;
-  background-color: $color2;
-
-  > form {
-    @include flexBox(column, center, flex-start, 2rem);
-    @include inputs;
-
-    button {
-      @include styledText(0.9rem);
-      @include myButton(18.75rem, 1rem);
+.login {
+  height: 100vh;
+  background: var(--primary-bg);
+  @include flex(column, center, center);
+  padding: 2rem;
+  
+  > section {
+    @include glass;
+    @include neumorphic("flat");
+    width: 100%;
+    max-width: 400px;
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    
+    > form {
+      @include flex(column, stretch, flex-start, 1.5rem);
+      
+      > h2 {
+        @include text-style(1.75rem, 600);
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      
+      > input {
+        @include input;
+      }
+      
+      > button {
+        @include button("primary");
+        width: 100%;
+      }
+      
+      > p {
+        text-align: center;
+        @include text-style(0.9rem, 400, var(--text-secondary));
+        
+        > a {
+          color: var(--accent-color);
+          font-weight: 500;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
     }
   }
+}
+
+.register {
+  @extend .login;
 }

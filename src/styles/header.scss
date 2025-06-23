@@ -1,30 +1,173 @@
 // ✅ _header.scss
 @use "features" as *;
 
-.header {
-  background-color: $color3;
+.header-nav {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(35, 40, 58, 0.92);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.18);
+  border-bottom: 1px solid #23283a;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 3rem;
-  width: 100%;
+  padding: 0.75rem 2rem;
+  gap: 2rem;
+  @media (max-width: 700px) {
+    padding: 0.75rem 1rem;
+  }
+}
 
-  > div {
-    h2 {
-      text-transform: uppercase;
-      color: $color2;
-      font-weight: 400;
+.header-title h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+// Hamburger
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  z-index: 1201;
+  @media (max-width: 700px) {
+    display: flex;
+  }
+}
+.bar {
+  width: 26px;
+  height: 3px;
+  background: var(--text-primary);
+  margin: 3px 0;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+.bar.open:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.bar.open:nth-child(2) { opacity: 0; }
+.bar.open:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+// Nav links
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  @media (max-width: 700px) {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100vw;
+    flex-direction: column;
+    background: rgba(35, 40, 58, 0.98);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.22);
+    padding: 1.5rem 0 1rem 0;
+    z-index: 1200;
+    &.show {
+      display: flex;
+      animation: menuSlideDown 0.25s cubic-bezier(.4,0,.2,1);
     }
   }
+}
 
-  > article {
-    display: flex;
-    align-items: center;
-    text-align: center;
+@keyframes menuSlideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    > a {
-      @include styledText;
-      @include myButton;
+.nav-link {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-xs);
+  transition: background var(--transition), color var(--transition);
+  position: relative;
+  &:hover, &.active {
+    background: rgba(123, 111, 251, 0.12);
+    color: var(--accent-color-hover);
+  }
+}
+
+.header-action {
+  display: flex;
+  align-items: center;
+  @media (max-width: 700px) {
+    display: none;
+    position: absolute;
+    top: calc(64px + 3.5rem);
+    left: 0;
+    width: 100vw;
+    flex-direction: column;
+    background: rgba(35, 40, 58, 0.98);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.22);
+    padding: 0 0 1.5rem 0;
+    z-index: 1200;
+    &.show {
+      display: flex;
+      animation: menuSlideDown 0.25s cubic-bezier(.4,0,.2,1);
     }
+  }
+}
+
+.logout-btn, .login-btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  &:hover:not(:disabled) {
+    background: var(--accent-color-hover);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: var(--shadow-md);
+  }
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+// Overlay for mobile menu
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(24,28,36,0.55);
+  z-index: 1100;
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+// Responsive tweaks
+@media (max-width: 700px) {
+  .header-title h2 {
+    font-size: 1.3rem;
+  }
+  .logout-btn, .login-btn {
+    padding: 0.5rem 1.1rem;
+    font-size: 0.98rem;
   }
 }
